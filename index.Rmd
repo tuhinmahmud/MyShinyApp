@@ -8,6 +8,10 @@ runtime: shiny
 #Summary
 The purpose of this project and presentation is to demonstrate how a shinyApp works and how it can be published online. The shiny app implemented here is a very simple one for getting the histogram of built in dataset cars.
 
+The shiny App is available online:
+
+https://tuhinmahmud.shinyapps.io/MyShinyCar/
+
 ##Input 
 There are two inputs to this App:
 
@@ -28,7 +32,7 @@ ui=fluidPage(
   titlePanel("Analysis of dataset cars"),
   sidebarLayout(
     sidebarPanel(
-      numericInput("obs", "Number of observation:", 10),
+      numericInput("obs", "Number of data points:", 10),
       selectInput("col_name", "Choose a column:", choices = c("speed", "dist"))
     ),
     mainPanel(
