@@ -1,0 +1,59 @@
+---
+title: "AnalyzeCar"
+author: "tuhin mahmud"
+date: "Wednesday, February 11, 2015"
+output: html_document
+runtime: shiny
+---
+#Summary
+The purpose of this project and presentation is to demonstrate how a shinyApp works and how it can be published online. The shiny app implemented here is a very simple one for getting the histogram of built in dataset cars.
+
+##Input 
+There are two inputs to this App:
+
+1. The number of sample points from Car dataset (1st to the number chosen)
+1. The column in the car dataset( e.g speed or dist)
+
+##Output
+1. A histogram depicting the frequency distribuiton of data points selected. 
+1. A blue line that depicts *mean* value of the data points chosen.
+
+
+## Embedded Shiny Application
+
+```{r, echo=FALSE}
+shinyApp(
+    
+ui=fluidPage(
+  titlePanel("Analysis of dataset cars"),
+  sidebarLayout(
+    sidebarPanel(
+      numericInput("obs", "Number of observation:", 10),
+      selectInput("col_name", "Choose a column:", choices = c("speed", "dist"))
+    ),
+    mainPanel(
+      plotOutput("distPlot")
+    )
+  )
+),
+
+server=function(input, output) { 
+  output$distPlot <- renderPlot({
+    row_count <- input$obs
+    #data_col<-"speed"
+    data_col<-input$col_name
+    if( row_count < 0 )
+        row_count <- nrow(cars)
+    x    <- cars[1:row_count, c(data_col)]  
+    mx <- mean(x)
+    hist(x, main=paste("Histogram of",data_col),xlab=data_col)
+    abline(v = mx, col = "blue", lwd = 2)
+    text(mx,0, "mean", col = "red", adj = c(0, -.1))
+  })
+ }
+)
+```
+
+###Reference:
+This App was designed similar to tutorials that comes with Shiny package installations using Rmd and R
+
